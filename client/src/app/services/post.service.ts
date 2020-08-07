@@ -17,5 +17,4 @@ export class PostService {
     this.paginaPosts++;
    return this.http.get(`${this.URL}/posts/?pagina=${this.paginaPosts}`);
   }
-
 }
