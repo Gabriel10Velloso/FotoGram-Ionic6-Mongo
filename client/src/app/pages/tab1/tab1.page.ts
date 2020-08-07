@@ -18,13 +18,22 @@ export class Tab1Page implements OnInit {
     this.siguientes();
   }
 
+  recargar(event) {
+    this.siguientes(event, true);
+    this.habilitado = true;
+    this.posts = [];
+  }
+
   siguientes(event?, pull: boolean = false) {
-    this.postService.getPosts()
-      .subscribe(resp => {
+    this.postService.getPosts(pull)
+      .subscribe((resp: any) => {
+
         console.log(resp);
         this.posts.push(...resp.posts);
+
         if (event) {
           event.target.complete();
+
           if (resp.posts.length === 0) {
             this.habilitado = false;
           }
