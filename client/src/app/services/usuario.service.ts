@@ -110,7 +110,6 @@ export class UsuarioService {
     const headers = new HttpHeaders({
       'x-token': this.token
     });
-
     return new Promise( resolve => {
       this.http.post(`${ URL }/user/update`, usuario, { headers })
         .subscribe( resp => {
