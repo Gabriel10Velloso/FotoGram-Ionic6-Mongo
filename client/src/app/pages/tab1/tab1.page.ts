@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/services/post.service';
+import { PostsService } from 'src/app/services/posts.service';
 import { Post } from '../../interfaces/interfaces';
 
 @Component({
@@ -12,10 +12,15 @@ export class Tab1Page implements OnInit {
   posts: Post[] = [];
   habilitado = true;
 
-  constructor(private postService: PostService) { }
+  constructor(private postsService: PostsService) { }
 
   ngOnInit() {
     this.siguientes();
+    
+    this.postsService.nuevoPost
+    .subscribe( post => {
+      this.posts.unshift( post );
+    });
   }
 
   recargar(event) {
@@ -25,7 +30,7 @@ export class Tab1Page implements OnInit {
   }
 
   siguientes(event?, pull: boolean = false) {
-    this.postService.getPosts(pull)
+    this.postsService.getPosts(pull)
       .subscribe((resp: any) => {
 
         console.log(resp);

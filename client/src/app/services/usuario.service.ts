@@ -5,12 +5,12 @@ import { environment } from '../../environments/environment';
 import { Usuario } from '../interfaces/interfaces';
 import { NavController } from '@ionic/angular';
 
-const URL = environment.url;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
+  URL = environment.url;
 
  token: string = null;
  private usuario: Usuario = {};
@@ -23,7 +23,7 @@ export class UsuarioService {
   login( email: string, password: string ) {
     const data = { email, password };
     return new Promise( resolve => {
-      this.http.post(`${ URL }/user/login`, data )
+      this.http.post(`${ this.URL }/user/login`, data )
         .subscribe( async resp => {
           console.log(resp);
 
@@ -48,7 +48,7 @@ export class UsuarioService {
 
   registro( usuario: Usuario ) {
     return new Promise( resolve => {
-      this.http.post(`${ URL }/user/create`, usuario )
+      this.http.post(`${ this.URL }/user/create`, usuario )
           .subscribe( async resp => {
             console.log(resp);
             if ( resp['ok'] ) {
@@ -92,7 +92,7 @@ export class UsuarioService {
       const headers = new HttpHeaders({
         'x-token': this.token
       });
-      this.http.get(`${ URL }/user/`, { headers })
+      this.http.get(`${ this.URL }/user/`, { headers })
         .subscribe( resp => {
           if ( resp['ok'] ) {
             this.usuario = resp['usuario'];
@@ -111,7 +111,7 @@ export class UsuarioService {
       'x-token': this.token
     });
     return new Promise( resolve => {
-      this.http.post(`${ URL }/user/update`, usuario, { headers })
+      this.http.post(`${ this.URL }/user/update`, usuario, { headers })
         .subscribe( resp => {
           if ( resp['ok'] ) {
             this.guardarToken( resp['token'] );

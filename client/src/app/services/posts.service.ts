@@ -9,6 +9,7 @@ import { UsuarioService } from './usuario.service';
   providedIn: 'root'
 })
 export class PostsService {
+  URL = environment.url;
 
   paginaPosts = 0;
 
@@ -25,7 +26,7 @@ export class PostsService {
       this.paginaPosts = 0;
     }
     this.paginaPosts ++;
-    return this.http.get<RespuestaPosts>(`${ URL }/posts/?pagina=${ this.paginaPosts }`);
+    return this.http.get<RespuestaPosts>(`${ this.URL }/posts/?pagina=${ this.paginaPosts }`);
   }
 
   crearPost( post ) {
@@ -33,9 +34,8 @@ export class PostsService {
       'x-token': this.usuarioService.token
     });
     return new Promise( resolve => {
-      this.http.post(`${ URL }/posts`, post, { headers })
+      this.http.post(`${ this.URL }/posts`, post, { headers })
         .subscribe( resp => {
-
           this.nuevoPost.emit( resp['post'] );
           resolve(true);
         });

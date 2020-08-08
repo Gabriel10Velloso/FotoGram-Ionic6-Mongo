@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PostsService } from 'src/app/services/posts.service';
 import { Router } from '@angular/router';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 // import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
@@ -22,45 +23,39 @@ export class Tab2Page {
 
   constructor(private postsService: PostsService,
     private route: Router,
-    //  private geolocation: Geolocation,
+    private geolocation: Geolocation,
     //  private camera: Camera
   ) { }
 
   async crearPost() {
-
-    console.log(this.post);
+    console.log('wwwww',this.post);
     const creado = await this.postsService.crearPost(this.post);
-
     this.post = {
       mensaje: '',
       coords: null,
       posicion: false
     };
-
     this.tempImages = [];
-
     this.route.navigateByUrl('/main/tabs/tab1');
-
   }
 
   getGeo() {
-
-    // if ( !this.post.posicion ) {
-    //   this.post.coords = null;
-    //   return;
-    // }
-    // this.cargandoGeo = true;
-    // this.geolocation.getCurrentPosition().then((resp) => {
-    //   // resp.coords.latitude
-    //   // resp.coords.longitude
-    //   this.cargandoGeo = false;
-    //   const coords = `${ resp.coords.latitude },${ resp.coords.longitude }`;
-    //   console.log(coords);
-    //   this.post.coords = coords;
-    //  }).catch((error) => {
-    //    console.log('Error getting location', error);
-    //    this.cargandoGeo = false;
-    //  });
+    if (!this.post.posicion) {
+      this.post.coords = null;
+      return;
+    }
+    this.cargandoGeo = true;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      this.cargandoGeo = false;
+      const coords = `${resp.coords.latitude},${resp.coords.longitude}`;
+      console.log(coords);
+      this.post.coords = coords;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+      this.cargandoGeo = false;
+    });
   }
 
   camara() {
