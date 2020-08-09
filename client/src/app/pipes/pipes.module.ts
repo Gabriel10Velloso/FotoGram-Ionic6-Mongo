@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ImageSanitizerPipe } from './image-sanitizer.pipe';
 import { ImagenPipe } from './imagen.pipe';
 import { DomSanitizerPipe } from './dom-sanitizer-pipe.pipe';
+import { ImageSanitizerPipe } from './image-sanitizer.pipe';
 
 @NgModule({
   declarations: [

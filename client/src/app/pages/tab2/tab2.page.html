@@ -29,23 +29,40 @@
 
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full" shape="round" (click)="camara()">
+    <!-- <ion-input type="file" accept="image/*" id="upload" [(ngModel)]="tempImages" ></ion-input> -->
+    <!-- <ion-input type="file" accept="image/png, image/jpeg" id="upload" #sss (ionChange)="procesarImagen2(sss.value)" ></ion-input> -->
+    <input type="file" (change)="onUploadChange($event)"  accept="image/png, image/jpeg" #fileInput multiple/>
+    
+    <!-- 🌝 Renderiza img -->
+    <!-- <label class="hoverable" for="fileInput">
+      <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 
+      <div class="hover-text">
+        Choose file
+        <h4 class="success-message" *ngIf="url"> Uploaded Successfully </h4>
+        </div>
+      <div class="background"></div>
+    </label>
+    <br/>
+    <input id="fileInput" type='file' (change)="onSelectFile($event)" multiple>
+    <button *ngIf="url" (click)="delete()">delete</button> -->
+
+      <!-- <ion-button expand="full" shape="round" (click)="camara()">
         <ion-icon slot="start" name="camera"></ion-icon>
         Cámara
-      </ion-button>
+      </ion-button> -->
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full" shape="round" (click)="libreria()">
+      <!-- <ion-button expand="full" shape="round" (click)="libreria()">
         <ion-icon slot="start" name="images"></ion-icon>
         Galería
-      </ion-button>
+      </ion-button> -->
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col size="3" *ngFor="let image of tempImages">
       <ion-card>
-        <!-- <img [src]="image | imageSanitizer"> -->
+        <!-- <img [src]="image"> -->
       </ion-card>
     </ion-col>
   </ion-row>
