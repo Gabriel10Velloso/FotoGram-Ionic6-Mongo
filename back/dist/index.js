@@ -10,6 +10,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
 const post_1 = __importDefault(require("./routes/post"));
+const post2_1 = __importDefault(require("./routes/post2"));
 const cors_1 = __importDefault(require("cors"));
 const server = new server_1.default();
 // Body parser
@@ -22,6 +23,7 @@ server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Rutas de mi app
 server.app.use('/user', usuario_1.default);
 server.app.use('/posts', post_1.default);
+server.app.use('/posts2', post2_1.default);
 // Conectar DB
 mongoose_1.default.connect('mongodb://localhost:27017/fotosgram', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err)

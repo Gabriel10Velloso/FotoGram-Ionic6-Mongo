@@ -52,7 +52,9 @@ postRoutes.post('/', [verificaToken], (req: any, res: Response) => {
 
 // Servicio para subir archivos
 postRoutes.post('/upload', [verificaToken], async (req: any, res: Response) => {
-
+  console.log('ssssssss',req.body);
+  
+  console.log('🌞 ',req.files.image);
   if (!req.files) {
     return res.status(400).json({
       ok: false,
