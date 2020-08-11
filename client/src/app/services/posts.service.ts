@@ -16,35 +16,35 @@ export class PostsService {
   nuevoPost = new EventEmitter<Post>();
 
 
-  constructor( private http: HttpClient,
-               private usuarioService: UsuarioService,
-               private fileTransfer: FileTransfer 
-               ) { }
+  constructor(private http: HttpClient,
+    private usuarioService: UsuarioService,
+    private fileTransfer: FileTransfer
+  ) { }
 
-  getPosts( pull: boolean = false ) {
-    if ( pull ) {
+  getPosts(pull: boolean = false) {
+    if (pull) {
       this.paginaPosts = 0;
     }
-    this.paginaPosts ++;
-    return this.http.get<RespuestaPosts>(`${ this.URL }/posts/?pagina=${ this.paginaPosts }`);
+    this.paginaPosts++;
+    return this.http.get<RespuestaPosts>(`${this.URL}/posts/?pagina=${this.paginaPosts}`);
   }
 
-  crearPost( post ) {
+  crearPost(post) {
     const headers = new HttpHeaders({
       'x-token': this.usuarioService.token
     });
-    return new Promise( resolve => {
-      this.http.post(`${ this.URL }/posts`, post, { headers })
-        .subscribe( resp => {
-          this.nuevoPost.emit( resp['post'] );
+    return new Promise(resolve => {
+      this.http.post(`${this.URL}/posts`, post, { headers })
+        .subscribe(resp => {
+          this.nuevoPost.emit(resp['post']);
           resolve(true);
         });
     });
   }
 
 
-  subirImagen( img: string ) {
-    console.log('sssssssssss',img);
+  subirImagen(img: string) {
+    console.log('sssssssssss', img);
     const options: FileUploadOptions = {
       fileKey: 'image',
       headers: {
@@ -52,11 +52,23 @@ export class PostsService {
       }
     };
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
-    fileTransfer.upload( img , `${ URL }/posts/upload`, options )
-      .then( data => {
+    fileTransfer.upload(img, `${this.URL}/posts/upload`, options)
+      .then(data => {
         console.log(data);
-      }).catch( err => {
+      }).catch(err => {
         console.log('error en carga', err);
       });
+  }
+
+
+  subirImagen2(images: any) {
+    const arr = [];
+    const formData = new FormData();
+    arr.push(images);
+
+    arr[0].forEach((item, i) => {
+      formData.append('image', arr[0][i]);
+    })
+    return this.http.post(`${this.URL}/posts2/upload2`, formData);
   }
 }

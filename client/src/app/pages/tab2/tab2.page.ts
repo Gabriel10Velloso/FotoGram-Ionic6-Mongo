@@ -18,7 +18,11 @@ export class Tab2Page {
   cargandoGeo = false;
 
   url: any = '';
+  ddddddd;
 
+  fileArr = [];
+  imgArr = [];
+  fileObj = [];
 
 
   @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
@@ -107,13 +111,14 @@ export class Tab2Page {
 
   // Upload browser
   private readFile(file: any) {
-    console.log('ssss', file);
+    console.log('ererer', file);
     const formData = new FormData();
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const imgBlob = new Blob([reader.result], { type: file.type });
-      formData.append('file', imgBlob, file.name);
+    this.ddddddd = reader.onloadend = () => {
+      const files = new Blob([reader.result], { type: file.type });
+      formData.append('files', files, file.name);
     };
+
     reader.readAsArrayBuffer(file);
   }
 
@@ -128,7 +133,7 @@ export class Tab2Page {
       // console.log('eu', this.myFiles[i]['name'], this.myFiles[i]['size']);
       this.tempImages.push(this.myFiles[i]['name']);
     }
-    console.log(this.myFiles);
+    this.ddddddd = this.tempImages
   }
 
 
@@ -147,5 +152,44 @@ export class Tab2Page {
   public delete() {
     this.url = null;
   }
-  
+
+
+  loadImageFromDevice(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      // get the blob of the image:
+      let blob: Blob = new Blob([new Uint8Array((reader.result as ArrayBuffer))]);
+      // create blobURL, such that we could use it in an image element:
+      URL.createObjectURL(blob);
+    };
+
+    reader.onerror = (error) => {
+
+      //handle errors
+
+    };
+  };
+
+  upload(e) {
+    const fileListAsArray = Array.from(e);
+
+    fileListAsArray.forEach((item, i) => {
+      const file = (e as HTMLInputElement);
+      const url = URL.createObjectURL(file[i]);
+      this.imgArr.push(url); // ta fazendo nada 
+      this.fileArr.push({ item, url: url });
+    });
+
+    this.fileArr.forEach((item) => {
+      this.fileObj.push(item.item);
+    });
+
+    this.postsService.subirImagen2(this.fileObj)
+      .subscribe(res => {
+        console.log(res);
+      })
+  }
+
 }

@@ -1,4 +1,5 @@
-<ion-header no-border>
+
+<ion-header  [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Nuevo Post
@@ -11,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="has-header">
 
   <ion-list>
     <ion-item>
@@ -31,8 +32,15 @@
     <ion-col size="6">
     <!-- <ion-input type="file" accept="image/*" id="upload" [(ngModel)]="tempImages" ></ion-input> -->
     <!-- <ion-input type="file" accept="image/png, image/jpeg" id="upload" #sss (ionChange)="procesarImagen2(sss.value)" ></ion-input> -->
-    <input type="file" (change)="onUploadChange($event)"  accept="image/png, image/jpeg" #fileInput multiple/>
-    
+    <!-- <input type="file" (change)="onUploadChange($event)"  accept="image/png, image/jpeg" #fileInput multiple/> -->
+    <input type="file" name="avatars" #fileField (change)="upload($event.target.files)" multiple>
+    <!-- <ion-button expand="full">
+      <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+      <ion-label slot="end">Upload Image</ion-label>
+      <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+        accept="image/png, image/jpeg">
+    </ion-button>
+    -->
     <!-- 🌝 Renderiza img -->
     <!-- <label class="hoverable" for="fileInput">
       <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 

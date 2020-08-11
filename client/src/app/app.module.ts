@@ -17,6 +17,9 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
+//API
+
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +39,7 @@ import { File } from '@ionic-native/file/ngx';
     FileTransfer,
     FileChooser,
     FilePath,
+    InAppBrowser,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

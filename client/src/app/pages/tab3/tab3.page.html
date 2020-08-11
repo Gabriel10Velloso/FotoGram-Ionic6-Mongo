@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button (click)="logout()" color="danger">
@@ -9,7 +9,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="has-header">
   <ion-row class="top-20">
     <ion-col size="12" class="ion-text-center">
       <img src="assets/avatars/{{ usuario.avatar }}" class="img-avatar">

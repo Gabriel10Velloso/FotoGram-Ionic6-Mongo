@@ -20,7 +20,7 @@ export class MapaComponent implements OnInit {
     const lng = Number(latLng[1]);
 
     // https://account.mapbox.com/ pegar token no site;
-    mapboxgl.accessToken = '';
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FicmllbHZlbGxvc28iLCJhIjoiY2tkbWE0Y2xhMTZxZDJ5cGRibG5xd2p4NSJ9.K7fLiEsOeh170iek-HWqcQ';
     const map = new mapboxgl.Map({
       container:  this.mapa.nativeElement,
       style: 'mapbox://styles/mapbox/streets-v11',

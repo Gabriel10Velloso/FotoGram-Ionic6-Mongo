@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-icon slot="icon-only" name="bonfire"></ion-icon>
@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" color="light">
+<ion-content [fullscreen]="true" color="light" class="has-header">
 
    <!-- Refresher -->
    <ion-refresher slot="fixed" (ionRefresh)="recargar( $event )">
