@@ -13,11 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const file_system_1 = __importDefault(require("../class/file-system"));
+const autenticacion_1 = require("../middlewares/autenticacion");
+const file_system2_1 = __importDefault(require("../class/file-system2"));
 const post2Routes = express_1.Router();
-const fileSystem = new file_system_1.default();
+const fileSystem = new file_system2_1.default();
 // Servicio para subir archivos
-post2Routes.post('/upload2', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+post2Routes.post('/upload2', [autenticacion_1.verificaToken], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.files) {
         return res.status(400).json({
             ok: false,
@@ -26,21 +27,12 @@ post2Routes.post('/upload2', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     const file = req.files.image;
     const verifica = [];
-    verifica.push(file);
-    // console.log(verifica)
     if (!file) {
         return res.status(400).json({
             ok: false,
             mensaje: 'No se subió ningun archivo - image'
         });
     }
-    // for (let fileImg of verifica) {
-    // if (!fileImg.mimetype.includes('image')) {
-    //   return res.status(400).json({
-    //     ok: false,
-    //     mensaje: 'Lo que subió no es una imagen'
-    //   });
-    // }
     // var re = /\s*;\s*/  ---- [ 'image/png' ]
     // console.log(fileImg.mimetype.split(re))
     // https://stackoverflow.com/questions/5965808/how-can-i-remove-all-characters-up-to-and-including-the-3rd-slash-in-a-string
@@ -48,6 +40,13 @@ post2Routes.post('/upload2', (req, res) => __awaiter(void 0, void 0, void 0, fun
     // console.log(fileImg.mimetype.split('/').shift())
     // console.log(fileImg.mimetype.split('/').pop())
     // }
+    // if (!file.mimetype.includes('image')) {
+    //   return res.status(400).json({
+    //     ok: false,
+    //     mensaje: 'Lo que subió no es una imagen'
+    //   });
+    // }
+    yield fileSystem.guardarImagenTemporal(file, req.usuario._id);
     res.json({
         ok: true,
         arquivo: file,
