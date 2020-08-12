@@ -23,9 +23,9 @@ export class Tab2Page {
   fileArr = [];
   imgArr = [];
   fileObj = [];
+  imgValida = '';
 
-
-  @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
+  @ViewChild('fileUploader', { static: true }) fileUploader: ElementRef;
   myFiles: any = [];
   post = {
     mensaje: '',
@@ -173,23 +173,45 @@ export class Tab2Page {
   };
 
   upload(e) {
+    this.imgValida = '';
     const fileListAsArray = Array.from(e);
-
     fileListAsArray.forEach((item, i) => {
-      const file = (e as HTMLInputElement);
-      const url = URL.createObjectURL(file[i]);
-      this.imgArr.push(url); // ta fazendo nada 
-      this.fileArr.push({ item, url: url });
+      // const file = (e as HTMLInputElement);
+      // const url = URL.createObjectURL(file[i]);
+      // this.imgArr.push(url); // ta fazendo nada;
+      if (!item['type'].includes('image')) {
+        this.imgValida = 'ERRO';
+        console.log('ERRO');
+        return this.resetFileUploader();
+      }
+      if (this.imgValida !== 'ERRO') {
+        this.fileArr.push({ item, image: item['name'] });
+      }
     });
 
-    this.fileArr.forEach((item) => {
-      this.fileObj.push(item.item);
-    });
+    if (this.imgValida !== 'ERRO') {
+      this.fileArr.forEach((item) => {
+        this.fileObj.push(item.item);
+      });
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.fileObj);
 
-    this.postsService.subirImagen2(this.fileObj)
-      .subscribe(res => {
-        console.log(res);
-      })
+      this.postsService.subirImagen2(this.fileObj)
+        .subscribe(res => {
+          this.resetFileUploader();
+          this.fileObj = [];
+          this.fileArr = [];
+          console.log(res);
+        },
+          erro => {
+            this.resetFileUploader();
+            this.fileObj = [];
+            this.fileArr = [];
+          });
+    }
+  }
+
+  resetFileUploader() {
+    this.fileUploader.nativeElement.value = null;
   }
 
 }

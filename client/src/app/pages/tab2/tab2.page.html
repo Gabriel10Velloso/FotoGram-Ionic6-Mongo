@@ -33,7 +33,8 @@
     <!-- <ion-input type="file" accept="image/*" id="upload" [(ngModel)]="tempImages" ></ion-input> -->
     <!-- <ion-input type="file" accept="image/png, image/jpeg" id="upload" #sss (ionChange)="procesarImagen2(sss.value)" ></ion-input> -->
     <!-- <input type="file" (change)="onUploadChange($event)"  accept="image/png, image/jpeg" #fileInput multiple/> -->
-    <input type="file" name="avatars" #fileField (change)="upload($event.target.files)" multiple>
+    <input type="file" name="avatars" #fileUploader (change)="upload($event.target.files)" multiple 
+    accept="image/*">
     <!-- <ion-button expand="full">
       <ion-icon lazy="true" slot="start" name="image"></ion-icon>
       <ion-label slot="end">Upload Image</ion-label>

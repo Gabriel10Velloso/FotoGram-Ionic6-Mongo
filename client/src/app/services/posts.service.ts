@@ -62,6 +62,9 @@ export class PostsService {
 
 
   subirImagen2(images: any) {
+    const headers = new HttpHeaders({
+      'x-token': this.usuarioService.token
+    });
     const arr = [];
     const formData = new FormData();
     arr.push(images);
@@ -69,6 +72,6 @@ export class PostsService {
     arr[0].forEach((item, i) => {
       formData.append('image', arr[0][i]);
     })
-    return this.http.post(`${this.URL}/posts2/upload2`, formData);
+    return this.http.post(`${this.URL}/posts2/upload2`, formData, { headers });
   }
 }
