@@ -7,7 +7,7 @@ import { Post } from 'src/app/interfaces/interfaces';
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
-
+  url;
   @Input() post: Post = {};
 
   slideSoloOpts = {
@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.url = 'http://localhost:3000';
   }
 
 }

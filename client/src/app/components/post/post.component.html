@@ -13,13 +13,13 @@
       <h5>{{ post.usuario.email }}</h5> 
     </ion-label>
   </ion-item>
-
+  <!-- https://www.udemy.com/course/ionic-ios-android-pwa-appstore-playstore-push/learn/lecture/13668782#questions/9800502 -->
 
   <!-- ngIf imgs.... -->
-  <ion-slides pager="true" *ngIf="post.imgs.length > 1">
+  <ion-slides pager="true">
     <ion-slide *ngFor="let img of post.imgs"
                class="image-slide"
-               [style]=" (img | imagen: post.usuario._id ) | domSanitizer ">
+               [ngStyle]="{ 'background-image': 'url(' + url + '/posts/imagen/' + post.usuario._id + '/' + img + ')' }">
     </ion-slide>
   </ion-slides>
   
