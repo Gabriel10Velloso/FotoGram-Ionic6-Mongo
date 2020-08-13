@@ -1,11 +1,11 @@
 import { Router, Response } from 'express';
 import { verificaToken } from '../middlewares/autenticacion';
 import { Post } from '../models/post.model';
-import FileSystem from '../class/file-system';
 import { FileUpload } from '../interfaces/file-upload';
+import FileSystem2 from '../class/file-system2';
 
 const postRoutes = Router();
-const fileSystem = new FileSystem();
+const fileSystem2 = new FileSystem2();
 
 
 // Obtener POST paginados
@@ -35,7 +35,7 @@ postRoutes.post('/', [verificaToken], (req: any, res: Response) => {
   const body = req.body;
   body.usuario = req.usuario._id;
 
-  const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
+  const imagenes = fileSystem2.imagenesDeTempHaciaPost(req.usuario._id);
   body.imgs = imagenes;
 
   Post.create(body).then(async postDB => {
@@ -78,7 +78,7 @@ postRoutes.post('/upload', [verificaToken], async (req: any, res: Response) => {
     });
   }
 
-  await fileSystem.guardarImagenTemporal(file, req.usuario._id);
+  await fileSystem2.guardarImagenTemporal(file, req.usuario._id);
 
   res.json({
     ok: true,
@@ -91,7 +91,7 @@ postRoutes.post('/upload', [verificaToken], async (req: any, res: Response) => {
 postRoutes.get('/imagen/:userid/:img', (req: any, res: Response) => {
   const userId = req.params.userid;
   const img = req.params.img;
-  const pathFoto = fileSystem.getFotoUrl(userId, img);
+  const pathFoto = fileSystem2.getFotoUrl(userId, img);
   res.sendFile(pathFoto);
 });
 

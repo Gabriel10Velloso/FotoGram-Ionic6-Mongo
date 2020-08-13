@@ -20,7 +20,7 @@ server.app.use( bodyParser.urlencoded({ extended: true }));
 server.app.use( bodyParser.json() );
 
 // FileUpload
-server.app.use( fileUpload({ useTempFiles: false }) );
+server.app.use( fileUpload({ useTempFiles: true }) );
 
 // Cors
 server.app.use(cors({origin: true, credentials: true}));

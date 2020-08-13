@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const autenticacion_1 = require("../middlewares/autenticacion");
 const post_model_1 = require("../models/post.model");
-const file_system_1 = __importDefault(require("../class/file-system"));
+const file_system2_1 = __importDefault(require("../class/file-system2"));
 const postRoutes = express_1.Router();
-const fileSystem = new file_system_1.default();
+const fileSystem2 = new file_system2_1.default();
 // Obtener POST paginados
 postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let pagina = Number(req.query.pagina) || 1;
@@ -39,7 +39,7 @@ postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 postRoutes.post('/', [autenticacion_1.verificaToken], (req, res) => {
     const body = req.body;
     body.usuario = req.usuario._id;
-    const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
+    const imagenes = fileSystem2.imagenesDeTempHaciaPost(req.usuario._id);
     body.imgs = imagenes;
     post_model_1.Post.create(body).then((postDB) => __awaiter(void 0, void 0, void 0, function* () {
         yield postDB.populate('usuario', '-password').execPopulate();
@@ -74,7 +74,7 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => __awai
             mensaje: 'Lo que subió no es una imagen'
         });
     }
-    yield fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    yield fileSystem2.guardarImagenTemporal(file, req.usuario._id);
     res.json({
         ok: true,
         file: file.mimetype
@@ -83,7 +83,7 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => __awai
 postRoutes.get('/imagen/:userid/:img', (req, res) => {
     const userId = req.params.userid;
     const img = req.params.img;
-    const pathFoto = fileSystem.getFotoUrl(userId, img);
+    const pathFoto = fileSystem2.getFotoUrl(userId, img);
     res.sendFile(pathFoto);
 });
 exports.default = postRoutes;
