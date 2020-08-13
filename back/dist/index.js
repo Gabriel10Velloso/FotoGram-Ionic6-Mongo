@@ -17,7 +17,7 @@ const server = new server_1.default();
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 // FileUpload
-server.app.use(express_fileupload_1.default({ useTempFiles: true }));
+server.app.use(express_fileupload_1.default({ useTempFiles: false }));
 // Cors
 server.app.use(cors_1.default({ origin: true, credentials: true }));
 // Rutas de mi app

@@ -7,16 +7,26 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const uniqid_1 = __importDefault(require("uniqid"));
 class FileSystem2 {
+    // nombreArchivo: any = [];
     constructor() {
         this.newName = [];
-        this.nombreArchivo = [];
     }
     ;
     guardarImagenTemporal(file, userId) {
-        const path = this.crearCarpetaUsuario(userId);
-        // Nombre archivo
-        const nombre = this.generarNombreUnico(file);
-        console.log('ttttttttttt', nombre);
+        return new Promise((resolve, reject) => {
+            const path = this.crearCarpetaUsuario(userId);
+            // Nombre archivo
+            const nombre = this.generarNombreUnico(file);
+            console.log('ttttttttttt', nombre);
+            // Mover el archivo del Temp a nuestra carpeta
+            // file.mv(`${path}/${nombre}`, (err: any) => {
+            //   if (err) {
+            //     reject(err);
+            //   } else {
+            //     resolve();
+            //   }
+            // });
+        });
     }
     generarNombreUnico(nombreOriginal) {
         if (nombreOriginal.length == undefined) {
